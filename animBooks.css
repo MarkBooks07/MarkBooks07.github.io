@@ -1,81 +1,55 @@
-/* Stile generale */
+/* Impostazioni di base */
 body {
-    background-color: #0f172a; /* Colore di sfondo scuro */
-    color: white; /* Colore del testo */
-    display: flex; /* Posiziona gli elementi al centro */
+    display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* Altezza minima del viewport */
-    margin: 0; /* Rimuove i margini */
-    font-family: Arial, sans-serif; /* Font generale */
+    min-height: 100vh;
+    margin: 0;
+    background-color: #1b1b1b;
 }
 
-/* Stile per ogni card */
 .card {
-    position: relative; /* Necessario per gestire elementi posizionati assolutamente */
-    width: 200px; /* Larghezza della card */
-    margin: 20px; /* Spazio tra le card */
-    perspective: 1000px; /* Aggiunge una prospettiva 3D */
+    perspective: 1000px; /* Imposta la prospettiva per l'effetto 3D */
 }
 
 .wrapper {
     position: relative;
-    width: 100%; /* Occupa tutta la larghezza della card */
-    height: 300px; /* Altezza fissa */
-    overflow: hidden; /* Nasconde gli elementi che escono dalla card */
-    border-radius: 15px; /* Angoli arrotondati */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Ombreggiatura */
+    width: 300px;
+    height: 400px;
+    transition: transform 0.5s; /* Aggiungi una transizione dolce */
+    transform-style: preserve-3d; /* Mantieni l'effetto 3D */
 }
 
-.wrapper img {
-    width: 100%; /* Adatta l'immagine alla larghezza */
-    height: 100%; /* Adatta l'immagine all'altezza */
-    object-fit: cover; /* Ritaglia l'immagine mantenendo le proporzioni */
-    transition: transform 0.5s; /* Animazione fluida per l'ingrandimento */
+.cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.5s, opacity 0.5s; /* Trasformazione e opacità per l'animazione */
 }
 
-/* Ingrandisce l'immagine quando si passa sopra la card */
-.card:hover .wrapper img {
-    transform: scale(1.1); /* Ingrandisce l'immagine del 10% */
-}
-
-/* Effetti overlay con pseudo-elementi */
-.wrapper::before,
-.wrapper::after {
-    content: ''; /* Pseudo-elemento vuoto */
+.character img{
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Sovrapposizione scura */
-    transition: opacity 0.5s, height 0.5s; /* Transizioni fluide */
-    opacity: 0; /* Invisibile inizialmente */
-    z-index: 1; /* Sovrapposto sopra l'immagine */
+    object-fit: cover;
+    opacity: 0; /* Inizialmente nascosta */
+    transition: opacity 0.5s; /* Controlla la visibilità */
+    border-radius: 8px;
 }
 
-/* Rende visibile il sovrapposto quando si passa sopra la card */
-.card:hover .wrapper::before,
-.card:hover .wrapper::after {
-    opacity: 1;
+/* Effetto al passaggio del mouse */
+.wrapper:hover {
+    transform: rotateY(15deg); /* Ruota l'immagine in 3D */
 }
 
-.card:hover .wrapper::after {
-    height: 120px; /* Cambia altezza del sovrapposto */
+.wrapper:hover .cover {
+    opacity: 0; /* Nascondi la copertura dell'immagine */
+    transform: rotateY(-15deg); /* Ruota l'immagine per creare l'effetto di 3D */
 }
 
-/* Stile del titolo */
-.title {
-    position: absolute;
-    bottom: 20px; /* Posizionato vicino al fondo */
-    left: 10px; /* Leggermente spostato a sinistra */
-    width: 100%;
-    font-size: 18px;
-    transition: transform 0.5s; /* Transizione fluida per il movimento */
-    z-index: 2; /* Sopra tutti gli altri elementi */
-}
-
-/* Movimento 3D del titolo quando si passa sopra la card */
-.card:hover .title {
-    transform: translate3d(0%, -50px, 100px); /* Effetto 3D */
+.wrapper:hover .character {
+    opacity: 1; /* Mostra l'immagine PNG del personaggio */
 }
